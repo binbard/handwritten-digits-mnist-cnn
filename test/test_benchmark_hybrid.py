@@ -4,6 +4,8 @@ from tensorflow.keras.datasets import mnist
 import numpy as np
 import gzip
 import os
+import matplotlib.pyplot as plt
+import pickle
 
 data_dir='./MNIST_data'
 
@@ -53,18 +55,30 @@ hybrid_model = tf.keras.Sequential([
 ])
 
 
-hybrid_model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+if not os.path.exists('history'):
+    os.makedirs('history')
+
+if not os.path.exists('history/histfile_hybrid_e5.pkl'):   # Not Found: Record and save to file
+    hybrid_model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+    history = hybrid_model.fit(x_train, y_train, epochs=5, validation_data=(x_test, y_test))
+    
+    with open('history/histfile_hybrid_e5.pkl', 'wb') as f:
+        pickle.dump(history.history, f)
+
+with open('history/histfile_hybrid_e5.pkl', 'rb') as f:
+    history = pickle.load(f)
 
 
-hybrid_model.fit(x_train, y_train, epochs=5, validation_data=(x_test, y_test))
 
+plt.figure("CNN-LSTM")
+plt.title('Model Performance')
+plt.xlabel('Epoch')
+plt.ylabel('Accuracy/Loss')
 
-if not os.path.exists('models'):
-    os.makedirs('models')
-hybrid_model.save('models/hybrid_model.h5')
+plt.plot(history['accuracy'], label='Training Accuracy')
+plt.plot(history['val_accuracy'], label='Validation Accuracy')
+plt.plot(history['loss'], label='Training Loss')
+plt.plot(history['val_loss'], label='Validation Loss')
 
-#Load from saved
-loaded_model = tf.keras.models.load_model('hybrid_model.h5')
-
-predictions = loaded_model.predict(x_test[:10])
-print(np.argmax(predictions, axis=1))
+plt.legend()
+plt.show()
