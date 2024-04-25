@@ -42,3 +42,7 @@ The interface is a simple GUI application that allows the user to draw a digit o
 
 ## Results
 The model achieved an accuracy of 99.05% on the test set.
+
+## Screenshots
+
+<img src="images/240425_124856PM_WindowsTerminal_EgI4d.png" width="420px">

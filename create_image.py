@@ -17,7 +17,7 @@ validRect = (width, height, 0, 0)
 
 sample_img_size = 28
 
-img_name = "temp/user_image_hw.jpg"
+img_name = "images/user_image_hw.jpg"
 
 def save():
     # crop image

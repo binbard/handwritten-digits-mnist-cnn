@@ -2,7 +2,7 @@ from keras.models import load_model
 import cv2
 import numpy as np
 
-img_name = "temp/user_image_hw.jpg"
+img_name = "images/user_image_hw.jpg"
 
 model = load_model('models/cnn_mnist.h5')
 
