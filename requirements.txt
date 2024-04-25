@@ -1,0 +1,5 @@
+keras==2.8
+Pillow==9.5.0
+tensorflow
+numpy
+matplotlib
